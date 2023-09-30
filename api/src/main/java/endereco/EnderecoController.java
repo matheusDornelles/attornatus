@@ -16,15 +16,14 @@ public class EnderecoController {
 
     @Autowired
     private EnderecoRepository enderecoRepository;
-
     @GetMapping
-    public ResponseEntity<List<Endereco>> listarEnderecos(@PathVariable Long pessoaId) {
+    public ResponseEntity<List<Endereco>> listarEnderecos(@RequestParam Long pessoaId) {
         return pessoaRepository.findById(pessoaId)
                 .map(pessoa -> ResponseEntity.ok().body(pessoa.getEnderecos()))
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping
+    @PostMapping("/pessoa/{pessoaId}/endereco")
     public ResponseEntity<Endereco> criarEndereco(@PathVariable Long pessoaId, @RequestBody Endereco endereco) {
         return pessoaRepository.findById(pessoaId)
                 .map(pessoa -> {
@@ -35,22 +34,22 @@ public class EnderecoController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PutMapping("/{enderecoId}/principal")
-    public ResponseEntity<Void> marcarEnderecoPrincipal(
-            @PathVariable Long pessoaId, @PathVariable Long enderecoId) {
-        return pessoaRepository.findById(pessoaId)
-                .map(pessoa -> {
-                    List<Endereco> enderecos = pessoa.getEnderecos();
-                    for (Endereco endereco : enderecos) {
-                        if (endereco.getId().equals(enderecoId)) {
-                            endereco.setPrincipal(true);
-                        } else {
-                            endereco.setPrincipal(false);
-                        }
-                    }
-                    enderecoRepository.saveAll(enderecos);
-                    return ResponseEntity.ok().build();
-                })
-                .orElse(ResponseEntity.notFound().build());
-    }
+//    @PutMapping("/{enderecoId}/principal")
+//    public ResponseEntity<Void> marcarEnderecoPrincipal(
+//            @PathVariable Long pessoaId, @PathVariable Long enderecoId) {
+//        return pessoaRepository.findById(pessoaId)
+//                .map(pessoa -> {
+//                    List<Endereco> enderecos = pessoa.getEnderecos();
+//                    for (Endereco endereco : enderecos) {
+//                        if (endereco.getId().equals(enderecoId)) {
+//                            endereco.setPrincipal(true);
+//                        } else {
+//                            endereco.setPrincipal(false);
+//                        }
+//                    }
+//                    enderecoRepository.saveAll(enderecos);
+//                    return ResponseEntity.ok().build();
+//                })
+//                .orElse(ResponseEntity.notFound().build());
+//    }
 }
