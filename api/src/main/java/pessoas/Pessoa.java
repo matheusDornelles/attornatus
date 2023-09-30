@@ -22,5 +22,21 @@ public class Pessoa {
     }
 
     public String getNome() {
+        return this.nome;
     }
+
+    public List<Endereco> getEnderecos() {
+        return this.enderecos;
+    }
+
+    public Object getDataNascimento() {
+        return this.dataNascimento;
+    }
+
+    public void setDataNascimento(Object dataNascimento) {
+    }
+
+    public void setEnderecoPrincipal(Endereco endereco) {
+    }
+
 }
